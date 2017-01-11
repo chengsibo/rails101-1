@@ -56,12 +56,13 @@ class GroupsController < ApplicationController
     else
       flash[:warning] = "你已经是本讨论版成员了！"
     end
+    redirect_to group_path(@group)
   end
 
   def quit
     @group = Group.find(params[:id])
 
-    if !current_user.is_member_of?(@group)
+    if current_user.is_member_of?(@group)
       current_user.quit!(@group)
       flash[:alert] = "已退出本讨论版！"
     else
